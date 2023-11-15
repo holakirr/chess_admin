@@ -3,44 +3,40 @@
 import { KpiCard } from "@src/components/Card";
 import { ChartView } from "@src/components/Chart";
 import { InfoTable } from "@src/components/InfoTable";
-import { Card, Grid, Tab, TabGroup, TabList, TabPanel, TabPanels, Text, Title } from "@tremor/react";
+import { Card, Flex, Tab, TabGroup, TabList, TabPanel, TabPanels, Text, Title } from "@tremor/react";
 
-export default function DashboardExample() {
+export default function Dashboard() {
 	return (
 		<main className='p-12'>
-			<Title>Dashboard</Title>
-			<Text>Lorem ipsum dolor sit amet, consetetur sadipscing elitr.</Text>
+			<Flex flexDirection='col' alignItems='start' className='mb-6'>
+				<Title>Дэшборд</Title>
+				<Text>Дэшборд на главной странице</Text>
+			</Flex>
 
-			<TabGroup className='mt-6'>
-				<TabList>
+			<TabGroup>
+				<TabList className='mb-6'>
 					<Tab>Overview</Tab>
 					<Tab>Detail</Tab>
 				</TabList>
+
 				<TabPanels>
 					<TabPanel>
-						<Grid numItemsMd={2} numItemsLg={3} className='gap-6 mt-6'>
+						<Flex justifyContent='between'>
 							<KpiCard />
-							<Card>
-								{/* Placeholder to set height */}
-								<div className='h-28' />
-							</Card>
-							<Card>
-								{/* Placeholder to set height */}
-								<div className='h-28' />
-							</Card>
-						</Grid>
-						<div className='mt-6'>
-							<Card>
-								<ChartView />
-							</Card>
-						</div>
-					</TabPanel>
-					<TabPanel>
+							<KpiCard />
+							<KpiCard />
+						</Flex>
 						<div className='mt-6'>
 							<Card>
 								<InfoTable />
 							</Card>
 						</div>
+					</TabPanel>
+
+					<TabPanel>
+						<Card>
+							<ChartView />
+						</Card>
 					</TabPanel>
 				</TabPanels>
 			</TabGroup>

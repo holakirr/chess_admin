@@ -2,7 +2,7 @@ import { BadgeDelta, Card, Flex, Metric, ProgressBar, Text } from "@tremor/react
 
 // Single KPI card in the demo dashboard with sample inputs
 export const KpiCard = () => (
-	<Card className='max-w-lg mx-auto'>
+	<Card className='max-w-lg'>
 		<Flex alignItems='start'>
 			<div>
 				<Text>Sales</Text>

@@ -1,8 +1,8 @@
 "use client";
 
 import {
-	BadgeDelta,
-	DeltaType,
+	Badge,
+	Button,
 	Flex,
 	Icon,
 	MultiSelect,
@@ -18,132 +18,127 @@ import {
 	Title,
 } from "@tremor/react";
 import { useState } from "react";
-export type SalesPerson = {
+import { AiFillDelete } from "react-icons/ai";
+
+export type SubscriptionStatus = "payed" | "notPayed" | "closeToTheEnd";
+export type Pupil = {
 	name: string;
-	leads: number;
-	sales: string;
-	quota: string;
-	variance: string;
-	region: string;
-	status: string;
+	restOfSubscription: number;
+	subscription: number;
+	lastLesson: string;
+	homework: string;
+	status: SubscriptionStatus;
 };
 
-export const salesPeople: SalesPerson[] = [
+export const pupils: Pupil[] = [
 	{
-		name: "Peter Doe",
-		leads: 45,
-		sales: "1,000,000",
-		quota: "1,200,000",
-		variance: "low",
-		region: "Region A",
-		status: "overperforming",
+		name: "Ваня Петров",
+		restOfSubscription: 2,
+		subscription: 8,
+		lastLesson: "Обсуждение осуждения",
+		homework: "Домашнее задание",
+		status: "payed",
 	},
 	{
-		name: "Lena Whitehouse",
-		leads: 35,
-		sales: "900,000",
-		quota: "1,000,000",
-		variance: "low",
-		region: "Region B",
-		status: "average",
+		name: "Кирилл Петров",
+		restOfSubscription: 2,
+		subscription: 8,
+		lastLesson: "Обсуждение осуждения",
+		homework: "Домашнее задание",
+		status: "payed",
 	},
 	{
-		name: "Phil Less",
-		leads: 52,
-		sales: "930,000",
-		quota: "1,000,000",
-		variance: "medium",
-		region: "Region C",
-		status: "underperforming",
+		name: "Алия Талиева",
+		restOfSubscription: 2,
+		subscription: 8,
+		lastLesson: "Обсуждение осуждения",
+		homework: "Домашнее задание",
+		status: "payed",
 	},
 	{
-		name: "John Camper",
-		leads: 22,
-		sales: "390,000",
-		quota: "250,000",
-		variance: "low",
-		region: "Region A",
-		status: "overperforming",
+		name: "Владимир Путин",
+		restOfSubscription: 2,
+		subscription: 8,
+		lastLesson: "Обсуждение осуждения",
+		homework: "Домашнее задание",
+		status: "closeToTheEnd",
 	},
 	{
-		name: "Max Balmoore",
-		leads: 49,
-		sales: "860,000",
-		quota: "750,000",
-		variance: "low",
-		region: "Region B",
-		status: "overperforming",
+		name: "Алексей Навальный",
+		restOfSubscription: 2,
+		subscription: 8,
+		lastLesson: "Обсуждение осуждения",
+		homework: "Домашнее задание",
+		status: "notPayed",
 	},
 ];
-
-const deltaTypes: { [key: string]: DeltaType } = {
-	average: "unchanged",
-	overperforming: "moderateIncrease",
-	underperforming: "moderateDecrease",
-};
 
 export const InfoTable = () => {
 	const [selectedStatus, setSelectedStatus] = useState("all");
 	const [selectedNames, setSelectedNames] = useState<string[]>([]);
 
-	const isSalesPersonSelected = (salesPerson: SalesPerson) =>
-		(salesPerson.status === selectedStatus || selectedStatus === "all") &&
-		(selectedNames.includes(salesPerson.name) || selectedNames.length === 0);
+	const isPupilSelected = (pupil: Pupil) =>
+		(pupil.status === selectedStatus || selectedStatus === "all") &&
+		(selectedNames.includes(pupil.name) || selectedNames.length === 0);
 
 	return (
 		<>
 			<div>
-				<Flex className='space-x-0.5' justifyContent='start' alignItems='center'>
-					<Title> Performance History </Title>
+				<Flex className='mb-3' justifyContent='start' alignItems='center'>
+					<Title>Ученики</Title>
 				</Flex>
 			</div>
-			<div className='flex space-x-2'>
+			<Flex justifyContent='start' className='gap-6'>
 				<MultiSelect
 					className='max-w-full sm:max-w-xs'
 					onValueChange={setSelectedNames}
 					placeholder='Select Salespeople...'
 				>
-					{salesPeople.map(item => (
+					{pupils.map(item => (
 						<MultiSelectItem key={item.name} value={item.name}>
 							{item.name}
 						</MultiSelectItem>
 					))}
 				</MultiSelect>
 				<Select className='max-w-full sm:max-w-xs' defaultValue='all' onValueChange={setSelectedStatus}>
-					<SelectItem value='all'>All Performances</SelectItem>
-					<SelectItem value='overperforming'>Overperforming</SelectItem>
-					<SelectItem value='average'>Average</SelectItem>
-					<SelectItem value='underperforming'>Underperforming</SelectItem>
+					<SelectItem value='all'>Все статусы</SelectItem>
+					<SelectItem value='payed'>Оплачено</SelectItem>
+					<SelectItem value='closeToTheEnd'>Скоро закончится</SelectItem>
+					<SelectItem value='notPayed'>Неоплачено</SelectItem>
 				</Select>
-			</div>
+			</Flex>
 			<Table className='mt-6'>
 				<TableHead>
 					<TableRow>
-						<TableHeaderCell>Name</TableHeaderCell>
-						<TableHeaderCell className='text-right'>Leads</TableHeaderCell>
-						<TableHeaderCell className='text-right'>Sales ($)</TableHeaderCell>
-						<TableHeaderCell className='text-right'>Quota ($)</TableHeaderCell>
-						<TableHeaderCell className='text-right'>Variance</TableHeaderCell>
-						<TableHeaderCell className='text-right'>Region</TableHeaderCell>
-						<TableHeaderCell className='text-right'>Status</TableHeaderCell>
+						<TableHeaderCell>Имя</TableHeaderCell>
+						<TableHeaderCell className='text-right'>Кол-во занятий</TableHeaderCell>
+						<TableHeaderCell className='text-right'>Крайняя тема/Домашнее задание</TableHeaderCell>
+						<TableHeaderCell className='text-right'>Статус</TableHeaderCell>
 					</TableRow>
 				</TableHead>
 
 				<TableBody>
-					{salesPeople
-						.filter(item => isSalesPersonSelected(item))
-						.map(item => (
-							<TableRow key={item.name}>
-								<TableCell>{item.name}</TableCell>
-								<TableCell className='text-right'>{item.leads}</TableCell>
-								<TableCell className='text-right'>{item.sales}</TableCell>
-								<TableCell className='text-right'>{item.quota}</TableCell>
-								<TableCell className='text-right'>{item.variance}</TableCell>
-								<TableCell className='text-right'>{item.region}</TableCell>
+					{pupils
+						.filter(pupil => isPupilSelected(pupil))
+						.map(pupil => (
+							<TableRow key={pupil.name}>
+								<TableCell>{pupil.name}</TableCell>
 								<TableCell className='text-right'>
-									<BadgeDelta deltaType={deltaTypes[item.status]} size='xs'>
-										{item.status}
-									</BadgeDelta>
+									{pupil.restOfSubscription}/{pupil.subscription}
+								</TableCell>
+								<TableCell className='text-right'>
+									{pupil.lastLesson} / {pupil.homework}
+								</TableCell>
+								<TableCell className='text-right'>
+									<Badge color={pupil.status === "payed" ? "green" : "red"} size='xs'>
+										{pupil.status}
+									</Badge>
+								</TableCell>
+								<TableCell className='text-right'>
+									<Button variant='secondary'>
+										Удалить
+										<Icon className='ml-2' icon={AiFillDelete} size='xs' aria-label='Delete' />
+									</Button>
 								</TableCell>
 							</TableRow>
 						))}
