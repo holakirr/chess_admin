@@ -1,5 +1,5 @@
-import type { Config } from "tailwindcss";
 import headless from "@headlessui/tailwindcss";
+import type { Config } from "tailwindcss";
 
 const config: Config = {
 	content: [

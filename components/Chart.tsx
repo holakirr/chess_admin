@@ -1,6 +1,6 @@
 "use client";
 
-import { AreaChart, Color, Flex, Icon, Tab, TabGroup, TabList, Text, Title } from "@tremor/react";
+import { AreaChart, Color, Flex, Tab, TabGroup, TabList, Text, Title } from "@tremor/react";
 import { useState } from "react";
 
 const usNumberformatter = (number: number, decimals = 0) =>

@@ -19,11 +19,11 @@ export const ProfilePic = () => (
 					/>
 				</Menu.Button>
 				{open && (
-					<Card className='fixed top-11 right-20 z-10' onClick={() => {}}>
+					<Card className='fixed top-11 right-20 z-10' onClick={() => { }}>
 						<MenuItem>
 							<Text>Hello</Text>
 						</MenuItem>
-						<Divider m />
+						<Divider />
 						<MenuItem>
 							<Button variant='light'>Log out</Button>
 						</MenuItem>
